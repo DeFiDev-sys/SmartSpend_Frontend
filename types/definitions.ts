@@ -1,4 +1,19 @@
 import {z} from "zod"
+export const getUserFromLocalstorage = (): userInfo | null => {
+  if (typeof window === "undefined") {
+    return null;
+  }
+  try {
+    const storedUserInfo = localStorage.getItem("userData");
+    return storedUserInfo ? JSON.parse(storedUserInfo) : null;
+  } catch (error) {
+    console.error("Error parsing userInfo from localStorage:", error);
+    return null;
+  }
+};
+
+
+
 //Login Schema
 export const LoginSchema = z.object({
     email: z.string().email("Invalid email address").trim(),

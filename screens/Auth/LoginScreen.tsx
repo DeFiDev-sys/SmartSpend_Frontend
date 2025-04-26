@@ -11,9 +11,16 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Facebook, LucideEye, LucideEyeClosed } from "lucide-react";
 import { FaGoogle } from "react-icons/fa";
+import { useAppDispatch, useAppSelector } from "@/hooks/ReactHook";
+import { LoginUserAction } from "@/redux/action/UserAction";
+// import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 const LoginScreen = () => {
   const [showPassword, setShowPassword] = React.useState<boolean>(false);
+  const dispatch = useAppDispatch();
+  // const navigate = useRouter();
+  const { loading, error, success } = useAppSelector((state) => state.user);
 
   const form = useForm<z.infer<typeof LoginSchema>>({
     resolver: zodResolver(LoginSchema),
@@ -24,11 +31,33 @@ const LoginScreen = () => {
   });
 
   const onSumbit = async (values: z.infer<typeof LoginSchema>) => {
-    console.log(values);
+    try {
+      const res = await dispatch(LoginUserAction(values.email, values.password));
+
+      if (res?.token) {
+        await toast(success);
+        window.location.href = "/users-dashboard";
+      }
+    } catch (error) {
+      if (error) {
+        await errorFunction(error);
+      }
+    } finally {
+      form.reset({
+        email: "",
+        password: "",
+      });
+    }
+  };
+
+  const errorFunction = (err: string | unknown) => {
+    if (err) {
+      toast(error);
+    }
   };
 
   return (
-    <div className='w-full min-h-dvh overflow-hidden'>
+    <div className='w-full min-h-dvh overflow-hidden px-3'>
       <div className='max-w-[448px] max-h-[600px] my-12 mx-auto flex flex-col gap-5'>
         <div className='w-full min-h-24 flex flex-col items-center gap-4'>
           <div className='flex gap-1.5 lg:gap-4 items-center'>
@@ -91,7 +120,7 @@ const LoginScreen = () => {
                 )}
               />
 
-              <Button className='w-full p-6 btnbg'>Login</Button>
+              <Button className='w-full p-6 btnbg'>{loading ? "Loading . . ." : "Login"}</Button>
 
               <div className='flex items-center my-4'>
                 <hr className='flex-grow border-t border-gray-300' />

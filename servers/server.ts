@@ -17,7 +17,7 @@ export const setAuthCookies = async (token: string) => {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
     path: "/",
-    sameSite: "strict",
+    sameSite: "lax",
   } as CookieOptions);
 };
 

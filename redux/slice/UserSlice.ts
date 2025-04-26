@@ -1,12 +1,11 @@
-
-import { userInfo, userState } from "@/types/definitions";
+import { getUserFromLocalstorage, userInfo, userState } from "@/types/definitions";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 const initialState: userState = {
     loading: false,
     error: null,
     success: null,
-    userData: null,
+    userData: getUserFromLocalstorage(),
 }
 
 export const userSlice = createSlice({
@@ -30,12 +29,19 @@ export const userSlice = createSlice({
             state.loading = false
             state.error = null
             state.userData = action.payload
+            try {
+                localStorage.setItem("userData", JSON.stringify(action.payload));
+            } catch (error) {
+                console.error("Error saving userInfo to localStorage:", error);
+            }
         },
         setUserLogout: (state) => {
             state.loading = false
             state.error = null
             state.success = null
             state.userData = null
+            localStorage.removeItem("userData")
+     
         },
     }
 });

@@ -1,6 +1,10 @@
 import React from "react";
 import BrandLogo from "./BrandLogo";
 import { Button } from "./ui/button";
+import { useAppDispatch, useAppSelector } from "@/hooks/ReactHook";
+import { setLoading, setUserLogout } from "@/redux/slice/UserSlice";
+import { useRouter } from "next/navigation";
+import { deleteAuthToken } from "@/servers/server";
 
 const headerLinks = [
   { name: "Features", path: "#features" },
@@ -10,6 +14,22 @@ const headerLinks = [
 ];
 
 const Header = () => {
+  const { userData, loading } = useAppSelector((state) => state.user);
+  const dispatch = useAppDispatch();
+  const router = useRouter();
+
+  const logOutFunc = async () => {
+    dispatch(setLoading(true));
+    try {
+      await dispatch(setUserLogout());
+
+      await deleteAuthToken();
+      router.push("/");
+      router.refresh();
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <header className='min-w-full min-h-16 border-b flex justify-between items-center px-4'>
       <div className='flex justify-between gap-1.5 lg:gap-4 items-center'>
@@ -25,17 +45,28 @@ const Header = () => {
           </a>
         ))}
       </div>
-      <div className='flex gap-4'>
-        <a href='/login'>
-          <Button variant={"outline"} className='font-medium text-xs'>
-            Login
-          </Button>
-        </a>
+      {userData === null ? (
+        <div className='flex gap-4'>
+          <a href='/login'>
+            <Button variant={"outline"} className='font-medium text-xs'>
+              Login
+            </Button>
+          </a>
 
-        <a href='/register'>
-          <Button className='btnbg font-medium text-xs'>Sign Up</Button>
-        </a>
-      </div>
+          <a href='/register'>
+            <Button className='btnbg font-medium text-xs'>Sign Up</Button>
+          </a>
+        </div>
+      ) : (
+        <div className='flex gap-5'>
+          <div className='flex items-center justify-center h-10 w-10 rounded-full bg-[#0F172A] text-white font-bold'>
+            {`${userData.firstname[0]}${userData.lastname[0]}`.toUpperCase()}
+          </div>
+          <Button variant={"outline"} className='font-medium text-xs' onClick={logOutFunc} disabled={loading}>
+            {loading ? "logging out..." : "Logout"}
+          </Button>
+        </div>
+      )}
     </header>
   );
 };

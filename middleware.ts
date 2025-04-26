@@ -1,18 +1,12 @@
 import { NextResponse, NextRequest } from "next/server";
 import { jwtVerify } from "jose";
 
-const PROTECTED_ROUTES = ['/admin', '/users-dashboard', '/user-profile'];
-const PUBLIC_ROUTES = ['/', '/login', '/register'];
-
 export async function middleware(req: NextRequest) {
   const token = req.cookies.get("token")?.value;
-  const pathname = req.nextUrl.pathname;
-  
-  const isProtectedRoute = PROTECTED_ROUTES.some(route => 
-    pathname.startsWith(route)
-  );
-  
-  const isPublicRoute = PUBLIC_ROUTES.includes(pathname);
+  const path = req.nextUrl.pathname;
+
+  const isProtectedRoute = ['/admin', '/users-dashboard', '/user-profile'].includes(path);
+  const isPublicRoute = ['/', '/login', '/register'].includes(path);
 
   if (isProtectedRoute && !token) {
     return NextResponse.redirect(new URL('/login', req.nextUrl));
@@ -25,8 +19,8 @@ export async function middleware(req: NextRequest) {
 
       return NextResponse.redirect(new URL('/users-dashboard', req.nextUrl));
     } catch (error) {
-      console.error('Invalid token:', error);
-      const response = NextResponse.redirect(new URL(pathname, req.nextUrl));
+      console.log(error)
+      const response = NextResponse.next();
       response.cookies.delete('token');
       return response;
     }
@@ -36,5 +30,5 @@ export async function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/((?!api|_next/static|_next/image|.*\\.png$).*)'],
+  matcher: ['/((?!api|_next/static|_next/image|favicon.ico).*)'],
 }

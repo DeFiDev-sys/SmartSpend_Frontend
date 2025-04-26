@@ -1,6 +1,6 @@
 "use client";
 
-import { store } from "@/Context/store";
+import { store } from "@/redux/store";
 import React from "react";
 import { Provider } from "react-redux";
 import Footer from "./Footer";

@@ -3,6 +3,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import ReduxProvider from "@/components/ReduxProvider";
 import { Inter } from "next/font/google";
+import { Toaster } from "@/components/ui/sonner";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -21,8 +22,11 @@ export default function RootLayout({
   return (
     <html lang='en' suppressHydrationWarning>
       <body className={`min-h-dvh scroll-smooth ${inter.className}`}>
-        <ThemeProvider attribute='class' defaultTheme='system' enableSystem disableTransitionOnChange>
-          <ReduxProvider>{children}</ReduxProvider>
+        <ThemeProvider attribute='class' defaultTheme='light' enableSystem disableTransitionOnChange>
+          <ReduxProvider>
+            <main>{children}</main>
+            <Toaster />
+          </ReduxProvider>
         </ThemeProvider>
       </body>
     </html>
