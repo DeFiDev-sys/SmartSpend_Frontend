@@ -1,4 +1,17 @@
-// import {z} from "zod"
+import {z} from "zod"
+//Login Schema
+export const LoginSchema = z.object({
+    email: z.string().email("Invalid email address").trim(),
+    password: z
+      .string()
+      .min(2, { message: "Password must be at least 8 characters long." })
+    //   .regex(/[a-zA-Z]/, { message: "Contain at least one letter." })
+    //   .regex(/[0-9]/, { message: "Contain at least one number." })
+    //   .regex(/[^a-zA-Z0-9]/, {
+    //     message: "Contain at least one special character.",
+    // })
+    .trim(),
+  });
 
 
 // user types
