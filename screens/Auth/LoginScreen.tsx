@@ -36,7 +36,7 @@ const LoginScreen = () => {
 
       if (res?.token) {
         await toast(success);
-        window.location.href = "/users-dashboard";
+        window.location.href = "/dashboard";
       }
     } catch (error) {
       if (error) {

@@ -5,7 +5,7 @@ export async function middleware(req: NextRequest) {
   const token = req.cookies.get("token")?.value;
   const path = req.nextUrl.pathname;
 
-  const isProtectedRoute = ['/admin', '/users-dashboard', '/user-profile'].includes(path);
+  const isProtectedRoute = ['/admin', '/dashboard', '/user-profile'].includes(path);
   const isPublicRoute = ['/', '/login', '/register'].includes(path);
 
   if (isProtectedRoute && !token) {
@@ -17,7 +17,7 @@ export async function middleware(req: NextRequest) {
       const secret = new TextEncoder().encode(process.env.JWT_SECRET);
       await jwtVerify(token, secret);
 
-      return NextResponse.redirect(new URL('/users-dashboard', req.nextUrl));
+      return NextResponse.redirect(new URL('/dashboard', req.nextUrl));
     } catch (error) {
       console.log(error)
       const response = NextResponse.next();

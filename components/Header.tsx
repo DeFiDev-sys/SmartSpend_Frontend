@@ -59,9 +59,11 @@ const Header = () => {
         </div>
       ) : (
         <div className='flex gap-5'>
-          <div className='flex items-center justify-center h-10 w-10 rounded-full bg-[#0F172A] text-white font-bold'>
-            {`${userData.firstname[0]}${userData.lastname[0]}`.toUpperCase()}
-          </div>
+          {userData.admin === false && (
+            <div className='flex items-center justify-center h-10 w-10 rounded-full bg-[#0F172A] text-white font-bold'>
+              {`${userData.firstname[0]}${userData.lastname[0]}`.toUpperCase()}
+            </div>
+          )}
           <Button variant={"outline"} className='font-medium text-xs' onClick={logOutFunc} disabled={loading}>
             {loading ? "logging out..." : "Logout"}
           </Button>
