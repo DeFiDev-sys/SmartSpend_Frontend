@@ -12,6 +12,7 @@ export const metadata: Metadata = {
 
 const inter = Inter({
   subsets: ["latin"],
+  fallback: ["latin"],
 });
 
 export default function RootLayout({

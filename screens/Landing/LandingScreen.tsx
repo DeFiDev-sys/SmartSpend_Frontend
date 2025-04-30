@@ -4,6 +4,7 @@ import { features, priceplanning } from "@/data/featureData";
 import Image from "next/image";
 import React from "react";
 import CheckedIcon from "@/components/featuresIcons/checkedIcon";
+import Link from "next/link";
 
 const LandingScreen = () => {
   return (
@@ -18,10 +19,14 @@ const LandingScreen = () => {
             faster.
           </p>
           <div className='flex flex-col lg:flex-row  gap-4'>
-            <Button className='btnbg p-6'>Get Started</Button>
-            <Button className='p-6' variant={"outline"}>
-              Learn More
-            </Button>
+            <Link href={"/login"}>
+              <Button className='btnbg p-6'>Get Started</Button>
+            </Link>
+            <Link href={"/about"}>
+              <Button className='p-6' variant={"outline"}>
+                Learn More
+              </Button>
+            </Link>
           </div>
         </div>
         {/*  */}
@@ -91,9 +96,11 @@ const LandingScreen = () => {
                   ))}
                 </CardDescription>
 
-                <Button className='absolute bottom-0 left-1/2 translate-x-[-50%] w-[90%] lg:w-[70%] btnbg my-5'>
-                  {prices.btnText}
-                </Button>
+                <Link href={"/login"}>
+                  <Button className='absolute bottom-0 left-1/2 translate-x-[-50%] w-[90%] lg:w-[70%] btnbg my-5'>
+                    {prices.btnText}
+                  </Button>
+                </Link>
               </Card>
             ))}
           </div>
@@ -110,8 +117,12 @@ const LandingScreen = () => {
             <br className='hidden lg:block' /> SmartSpend.
           </p>
           <div className='flex flex-col gap-4 lg:gap-0 lg:flex-row justify-between w-full lg:w-[250px]'>
-            <Button className='btnbg'>Sign Up Now</Button>
-            <Button variant={"outline"}>Learn More</Button>
+            <a href='/register'>
+              <Button className='btnbg'>Sign Up Now</Button>
+            </a>
+            <a href='/about'>
+              <Button variant={"outline"}>Learn More</Button>
+            </a>
           </div>
         </div>
       </section>

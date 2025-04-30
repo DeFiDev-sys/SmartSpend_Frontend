@@ -24,7 +24,7 @@ const Header = () => {
       await dispatch(setUserLogout());
 
       await deleteAuthToken();
-      router.push("/");
+      await router.push("/");
       router.refresh();
     } catch (error) {
       console.log(error);

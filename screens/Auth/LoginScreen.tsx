@@ -9,8 +9,8 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Facebook, LucideEye, LucideEyeClosed } from "lucide-react";
-import { FaGoogle } from "react-icons/fa";
+import { LucideEye, LucideEyeClosed } from "lucide-react";
+import { FaFacebook, FaGoogle } from "react-icons/fa";
 import { useAppDispatch, useAppSelector } from "@/hooks/ReactHook";
 import { LoginUserAction } from "@/redux/action/UserAction";
 // import { useRouter } from "next/navigation";
@@ -20,7 +20,7 @@ const LoginScreen = () => {
   const [showPassword, setShowPassword] = React.useState<boolean>(false);
   const dispatch = useAppDispatch();
   // const navigate = useRouter();
-  const { loading, error, success } = useAppSelector((state) => state.user);
+  const { loading, error } = useAppSelector((state) => state.user);
 
   const form = useForm<z.infer<typeof LoginSchema>>({
     resolver: zodResolver(LoginSchema),
@@ -35,7 +35,7 @@ const LoginScreen = () => {
       const res = await dispatch(LoginUserAction(values.email, values.password));
 
       if (res?.token) {
-        await toast(success);
+        toast.success(`Welcome Back! ${res.user.username}`);
         window.location.href = "/dashboard";
       }
     } catch (error) {
@@ -79,7 +79,13 @@ const LoginScreen = () => {
                   <FormItem>
                     <FormLabel>Email</FormLabel>
                     <FormControl>
-                      <Input placeholder='email' type='email' {...field} required className='bg-transparent' />
+                      <Input
+                        placeholder='name@exmaple.com'
+                        type='email'
+                        {...field}
+                        required
+                        className='bg-transparent'
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -130,7 +136,7 @@ const LoginScreen = () => {
 
               <div className='h-full grid grid-cols-2 gap-4'>
                 <Button className='p-6 flex gap-5 w-full' variant={"outline"}>
-                  <Facebook />
+                  <FaFacebook />
                   <p>Facebook</p>
                 </Button>
                 <Button className='p-6 flex gap-5 w-full' variant={"outline"}>

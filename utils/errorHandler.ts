@@ -9,8 +9,8 @@ export const handleAsyncError  = (
 ): string =>{
     if (axios.isAxiosError(error)) {
         dispatch(setError(error.response?.data?.message))
-        throw new Error(error.response?.data?.message || "Login failed");
+        throw new Error(error.response?.data?.message || "Request failed");
     }
     
-    throw error;
+    throw new Error('Request Failed');
 }

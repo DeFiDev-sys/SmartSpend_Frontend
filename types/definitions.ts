@@ -27,6 +27,31 @@ export const LoginSchema = z.object({
     // })
     .trim(),
   });
+export const RegisterSchema = z.object({
+    firstname:z.string().trim(),
+    lastname:z.string().trim(),
+    email: z.string().email("Invalid email address").trim(),
+    username:z.string().min(3,{message:"UserName must be 3 characters long."}).trim(),
+    password: z
+      .string()
+      .min(2, { message: "Password must be at least 8 characters long." })
+    //   .regex(/[a-zA-Z]/, { message: "Contain at least one letter." })
+    //   .regex(/[0-9]/, { message: "Contain at least one number." })
+    //   .regex(/[^a-zA-Z0-9]/, {
+    //     message: "Contain at least one special character.",
+    // })
+    .trim(),
+    confirmPassword: z
+      .string()
+      .min(2, { message: "Password must be at least 8 characters long." })
+    //   .regex(/[a-zA-Z]/, { message: "Contain at least one letter." })
+    //   .regex(/[0-9]/, { message: "Contain at least one number." })
+    //   .regex(/[^a-zA-Z0-9]/, {
+    //     message: "Contain at least one special character.",
+    // })
+    .trim(),
+    checkPolicy:z.boolean().default(false).optional()
+  });
 
 
 // user types
