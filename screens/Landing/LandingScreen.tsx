@@ -20,10 +20,10 @@ const LandingScreen = () => {
           </p>
           <div className='flex flex-col lg:flex-row  gap-4'>
             <Link href={"/login"}>
-              <Button className='btnbg p-6'>Get Started</Button>
+              <Button className='btnbg p-6 w-full'>Get Started</Button>
             </Link>
-            <Link href={"/about"}>
-              <Button className='p-6' variant={"outline"}>
+            <Link href={"/about_us"}>
+              <Button className='p-6 w-full' variant={"outline"}>
                 Learn More
               </Button>
             </Link>
@@ -120,7 +120,7 @@ const LandingScreen = () => {
             <a href='/register'>
               <Button className='btnbg'>Sign Up Now</Button>
             </a>
-            <a href='/about'>
+            <a href='/about_us'>
               <Button variant={"outline"}>Learn More</Button>
             </a>
           </div>

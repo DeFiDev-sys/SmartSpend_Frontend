@@ -15,6 +15,7 @@ import { useAppDispatch, useAppSelector } from "@/hooks/ReactHook";
 import { LoginUserAction } from "@/redux/action/UserAction";
 // import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import Link from "next/link";
 
 const LoginScreen = () => {
   const [showPassword, setShowPassword] = React.useState<boolean>(false);
@@ -52,7 +53,7 @@ const LoginScreen = () => {
 
   const errorFunction = (err: string | unknown) => {
     if (err) {
-      toast(error);
+      toast(error || "Request Failed");
     }
   };
 
@@ -97,7 +98,12 @@ const LoginScreen = () => {
                 name='password'
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Password</FormLabel>
+                    <div className='flex justify-between'>
+                      <FormLabel>Password</FormLabel>
+                      <Link href={"/forget-password"} className='text-sm'>
+                        Forget Password?
+                      </Link>
+                    </div>
                     <FormControl>
                       <div className='relative'>
                         <Input
@@ -126,7 +132,9 @@ const LoginScreen = () => {
                 )}
               />
 
-              <Button className='w-full p-6 btnbg'>{loading ? "Loading . . ." : "Login"}</Button>
+              <Button className='w-full p-6 btnbg' disabled={loading}>
+                {loading ? "Loading . . ." : "Login"}
+              </Button>
 
               <div className='flex items-center my-4'>
                 <hr className='flex-grow border-t border-gray-300' />

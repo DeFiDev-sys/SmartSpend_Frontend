@@ -5,6 +5,7 @@ import { useAppDispatch, useAppSelector } from "@/hooks/ReactHook";
 import { setLoading, setUserLogout } from "@/redux/slice/UserSlice";
 import { useRouter } from "next/navigation";
 import { deleteAuthToken } from "@/servers/server";
+import { toast } from "sonner";
 
 const headerLinks = [
   { name: "Features", path: "#features" },
@@ -21,13 +22,14 @@ const Header = () => {
   const logOutFunc = async () => {
     dispatch(setLoading(true));
     try {
-      await dispatch(setUserLogout());
-
       await deleteAuthToken();
-      await router.push("/");
+      dispatch(setUserLogout());
+      router.push("/");
+      toast.success("Logged out");
       router.refresh();
     } catch (error) {
       console.log(error);
+      toast.error("Failed to Log out");
     }
   };
   return (

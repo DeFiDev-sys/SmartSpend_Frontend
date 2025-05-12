@@ -53,6 +53,30 @@ export const RegisterSchema = z.object({
     checkPolicy:z.boolean().default(false).optional()
   });
 
+  export const ForgetPasswordScheme = z.object({
+    email: z.string().email("Invalid email address").trim(),
+  });
+
+  export const ResetPasswordScheme = z.object({
+    password: z
+    .string()
+    .min(2, { message: "Password must be at least 8 characters long." })
+  //   .regex(/[a-zA-Z]/, { message: "Contain at least one letter." })
+  //   .regex(/[0-9]/, { message: "Contain at least one number." })
+  //   .regex(/[^a-zA-Z0-9]/, {
+  //     message: "Contain at least one special character.",
+  // })
+  .trim(),
+  confirmPassword: z
+    .string()
+    .min(2, { message: "Password must be at least 8 characters long." })
+  //   .regex(/[a-zA-Z]/, { message: "Contain at least one letter." })
+  //   .regex(/[0-9]/, { message: "Contain at least one number." })
+  //   .regex(/[^a-zA-Z0-9]/, {
+  //     message: "Contain at least one special character.",
+  // })
+  .trim(),
+  });
 
 // user types
 export type userInfo ={
@@ -77,4 +101,12 @@ export interface userState {
     error:string | null;
     success:string|null
     userData:userInfo | null;
+}
+
+export interface userStatusMsg {
+  message:string
+}
+
+export type token ={
+  token : string
 }
