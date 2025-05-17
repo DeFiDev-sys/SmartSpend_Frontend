@@ -27,7 +27,7 @@ export const verifyAuthToken = async () => {
     const token = cookie.get("token")?.value;
 
     if (!token) {
-      throw new Error("No authentication token found");
+      return new Error("No authentication token found");
     }
 
     const secret = new TextEncoder().encode(process.env.JWT_SECRET!);

@@ -9,7 +9,7 @@ import Header from "./Header";
 import LandingPageFooter from "./LandingPageFooter";
 
 const ReduxProvider = ({ children }: Readonly<{ children: React.ReactNode }>) => {
-  const publicRoutes = ["/login", "/register", "/forget-password", "/reset-password"];
+  const publicRoutes = ["/login", "/register", "/forget-password", "/reset-password", "/dashboard"];
   return (
     <Provider store={store}>
       <HeaderConditional publicRoutes={publicRoutes} />
