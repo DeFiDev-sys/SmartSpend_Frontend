@@ -8,6 +8,8 @@ import CountUp from "react-countup";
 import PlusIcon from "@/components/Svgs/plusIcon";
 import GoodIcon from "@/components/Svgs/goodIcon";
 import ShieldIcon from "@/components/Svgs/shieldIcon";
+import { Calendar, ChartPie, CirclePlus, House, Settings } from "lucide-react";
+import { SidebarItem } from "@/types/expensesType";
 
 export const features = [
   {
@@ -132,3 +134,34 @@ export const aboutData = {
     },
   ],
 };
+
+export const DashboardData: SidebarItem[] = [
+  {
+    icon: <CirclePlus />,
+    name: "Add Expenses",
+  },
+  {
+    icon: <House />,
+    name: "Dashboard",
+  },
+  {
+    icon: <ChartPie />,
+    name: "Analysis",
+  },
+  {
+    icon: <Calendar />,
+    name: "Calendar",
+  },
+  {
+    icon: <Settings />,
+    name: "Settings",
+  },
+];
+
+export const CategoryItems = [
+  { name: "Housing" },
+  { name: "Food" },
+  { name: "Transport" },
+  { name: "Entertainment" },
+  { name: "Utilites" },
+];

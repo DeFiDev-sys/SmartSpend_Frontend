@@ -26,7 +26,7 @@ const ForgetScreen = () => {
     },
   });
 
-  const onSumbit = async (values: z.infer<typeof ForgetPasswordScheme>) => {
+  const onSubmit = async (values: z.infer<typeof ForgetPasswordScheme>) => {
     dispatch(setLoading(true));
     try {
       await dispatch(ForgetPasswordAction(values.email));
@@ -63,7 +63,7 @@ const ForgetScreen = () => {
 
         <div className='w-full min-h-full space-y-6'>
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSumbit)} className='w-full h-full space-y-6'>
+            <form onSubmit={form.handleSubmit(onSubmit)} className='w-full h-full space-y-6'>
               <FormField
                 control={form.control}
                 name='email'

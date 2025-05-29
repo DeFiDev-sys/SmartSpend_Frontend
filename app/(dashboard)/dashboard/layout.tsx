@@ -10,8 +10,8 @@ export default async function Layout({ children }: { children: React.ReactNode }
   return (
     <SidebarProvider defaultOpen={defaultOpen}>
       <AppSidebar />
-      <main>
-        <SidebarTrigger className='absolute top-1/2' />
+      <main className='w-full'>
+        <SidebarTrigger className='absolute top-0 lg:top-1/2' />
         {children}
       </main>
     </SidebarProvider>
