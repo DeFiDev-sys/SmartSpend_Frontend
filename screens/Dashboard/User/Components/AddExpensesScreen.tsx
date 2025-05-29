@@ -12,7 +12,6 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { CategoryItems } from "@/data/featureData";
 import { useAppDispatch, useAppSelector } from "@/hooks/ReactHook";
 import { AddExpenses } from "@/redux/action/ExpensesAction";
-import { useRouter } from "next/navigation";
 
 type AddExpensesScreenProps = {
   setActiveModel: () => void;
@@ -20,7 +19,6 @@ type AddExpensesScreenProps = {
 
 const AddExpensesScreen = ({ setActiveModel }: AddExpensesScreenProps) => {
   const dispatch = useAppDispatch();
-  const route = useRouter();
   const { loading, error } = useAppSelector((state) => state.expenses);
   const form = useForm<z.infer<typeof AddExpensesScheme>>({
     resolver: zodResolver(AddExpensesScheme),
@@ -39,7 +37,7 @@ const AddExpensesScreen = ({ setActiveModel }: AddExpensesScreenProps) => {
       }
       toast.success("Expenses Added Successfully");
       setActiveModel();
-      route.refresh();
+      window.location.href = "/dashboard";
     } catch (error) {
       if (error) {
         toast.error("Request Failed");

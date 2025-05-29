@@ -1,6 +1,6 @@
 "use client";
 
-import React, { ReactNode } from "react";
+import React, { ReactNode, useEffect } from "react";
 import { Sidebar, SidebarContent, SidebarFooter, SidebarGroup, SidebarHeader } from "./ui/sidebar";
 import { Button } from "./ui/button";
 import { useAppDispatch, useAppSelector } from "@/hooks/ReactHook";
@@ -19,6 +19,11 @@ const AppSidebar = () => {
   const { loading, userData } = useAppSelector((state) => state.user);
   const router = useRouter();
   const [activeModel, setActiveModel] = React.useState<ReactNode | null>(null);
+  const [isClient, setIsClient] = React.useState<boolean>(false); // to delay the SSR for userData to avoid hydrations
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   const logOutFunc = async () => {
     dispatch(setLoading(true));
@@ -63,7 +68,7 @@ const AppSidebar = () => {
           <BrandLogo />
           <h1 className='lg:text-xl font-bold'>SmartSpend</h1>
         </div>
-        {userData && userData.admin === false && (
+        {isClient && userData && userData.admin === false && (
           <div className='flex items-center justify-center h-10 w-10 rounded-full bg-[#0F172A] text-white font-bold text-xl'>
             {`${userData.firstname[0]}${userData.lastname[0]}`.toUpperCase()}
           </div>
